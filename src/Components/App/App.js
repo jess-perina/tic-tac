@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../../logo.svg';
 import './App.css';
-import Game from '../Game/Game';
-import AIGame from '../AIGame/AIGame';
 import MasterGame from '../MasterGame/MasterGame';
 
 class App extends Component {
@@ -22,9 +20,6 @@ class App extends Component {
         </header>
         <div className="cyan darken-4">
           <MasterGame />
-          <p>Other game options below</p>
-          <Game />
-          <AIGame gameType={this.state.isGameAI} />
         </div>
       </div>
     );
