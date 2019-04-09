@@ -1,0 +1,23 @@
+{
+  "name": "tic-tac",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "materialize-css": "^1.0.0-rc.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.16.0",
+    "eslint-config-fullstack": "^6.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
