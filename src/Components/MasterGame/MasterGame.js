@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import './MasterGame.css';
 import M from 'materialize-css';
+import ticTac from '../../lib/ticTac'
+import './MasterGame.css';
 import Board from '../Board/Board';
 import AlertModal from './AlertModal'
 import PlayerModeButton from '../PlayerModeButton/PlayerModeButton'
 import WhoStartsButton from '../WhoStartsButton/WhoStartsButton'
 import GameModeButton from '../GameModeButton/GameModeButton'
+import ResetButton from '../ResetButton/ResetButton';
+import MovesList from '../MovesList/MovesList';
 
 
 export default class Game extends Component {
@@ -42,13 +45,13 @@ export default class Game extends Component {
     console.log('making moves in shouldComponentUpdate', 'current state: ', this.state, 'next state: ', nextState)
     const computerPiece = this.state.computerIsX ? 'X' : 'O'
     const squares = nextState.history[nextState.history.length - 1].squares.slice()
-    const AIMove = minMax(squares, computerPiece).index
+    const AIMove = ticTac.minMax(squares, computerPiece).index
 
     this.makeAIMoves(nextState, AIMove)
     return true
   }
 
-  makeAIMoves(nextState, AIMove) { //REVIEW: there's a bug when resetting
+  makeAIMoves(nextState, AIMove) {
     if (!this.state.isSinglePlayer) {
       return
     }
@@ -82,7 +85,7 @@ export default class Game extends Component {
       const current = history[history.length - 1]
       const squares = current.squares.slice()
 
-      if (calculateWinner(squares) || squares[i]) {
+      if (ticTac.calculateWinner(squares) || squares[i]) {
         return;
       }
       squares[i] = prevState.xIsNext ? 'X' : 'O';
@@ -169,7 +172,7 @@ export default class Game extends Component {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+    const winner = ticTac.calculateWinner(current.squares);
     const playerMode = this.state.isSinglePlayer ? 'Single Player' : 'Two Player';
     const practiceMode = this.state.isPracticeMode ? 'Practice' : 'Serious';
     const whoStarts = this.state.computerIsX ? 'Computer' : 'You'
@@ -180,7 +183,7 @@ export default class Game extends Component {
         'Go to game start';
 
       return (
-        <li key={move} className="collection-item">
+        <li key={move} className="collection-item teal accent-4">
           <button type="button" className="btn-small waves-effect waves-light" onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
@@ -206,23 +209,19 @@ export default class Game extends Component {
                 />
 
                 {this.state.isSinglePlayer
-                  ?  (<WhoStartsButton
-                        starts={whoStarts}
-                        setHumanStart={() => this.setHumanStart()}
-                        setComputerStart={() => this.setComputerStart()}
-                      />)
-                  : null
+                  ? (<WhoStartsButton
+                      starts={whoStarts}
+                      setHumanStart={() => this.setHumanStart()}
+                      setComputerStart={() => this.setComputerStart()}
+                    />)
+                  : (<GameModeButton
+                      practiceMode={practiceMode}
+                      setPractice={() => this.setPracticeMode()}
+                      setSerious={() => this.setSeriousMode()}
+                    />)
                 }
 
-                {!this.state.isSinglePlayer
-                  ?  (<GameModeButton
-                        practiceMode={practiceMode}
-                        setPractice={() => this.setPracticeMode()}
-                        setSerious={() => this.setSeriousMode()}
-                      />)
-                  : null
-                }
-                <button type="button" className="reset-btn btn waves-effect waves-light" onClick={() => this.resetGame()}>Reset Game</button>
+                <ResetButton resetGame={() => this.resetGame()} />
               </div>
             </div>
           </div>
@@ -246,7 +245,7 @@ export default class Game extends Component {
                 <div className="col s12">
                   <div className="card valign-wrapper teal darken-1">
                     <div className="card-content white-text">
-                      <ul className="collection">{moves}</ul>
+                      <MovesList moves={moves} />
                     </div>
                   </div>
                 </div>
@@ -259,112 +258,4 @@ export default class Game extends Component {
       </div>
     );
   }
-}
-
-// ========================================
-
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
-  let tie = 'Tie';
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a]
-    } else if (squares[a] === null || squares[b] === null || squares[c] === null){
-      tie = '';
-    }
-  }
-  return tie || null;
-}
-
-function displayWinner(winner) {
-  switch (winner) {
-    case 'X':
-      return 'You win';
-    case 'O':
-      return 'Computer wins'
-    default:
-      return 'Tie';
-  }
-}
-
-function possibleMoves(board) {
-  let options = []
-  for (var i = 0; i < board.length; i++) {
-    if (board[i] === null) {
-      options.push(i)
-    }
-  }
-  return options
-  // return board.filter((s, index ) => {
-  //   if (s === null) return index
-  // })
-}
-
-function setScore(winner, moves) {
-  if (winner === 'X') {
-    return {score: -10}
-  } else if (winner === 'O') {
-    return {score: 10}
-  } else if (moves.length === 0) {
-    return {score: 0}
-  }
-}
-
-function minMax(board, player) {
-  const availableMoves = possibleMoves(board)
-  const winner = calculateWinner(board)
-  if (winner === 'X') {
-    return {score: -10}
-  } else if (winner === 'O') {
-    return {score: 10}
-  } else if (availableMoves.length === 0) {
-    return {score: 0}
-  }
-
-  let moves = []
-  for (let i = 0; i < availableMoves.length; i++) {
-    let move = []
-    move.index = availableMoves[i]
-    board[availableMoves[i]] = player
-
-    if (player === 'O') {
-      let g = minMax(board, 'X')
-      move.score = g.score
-    } else {
-      let g = minMax(board, 'O')
-      move.score = g.score
-    }
-    board[availableMoves[i]] = null
-    moves.push(move)
-  }
-
-  let bestMove
-  if (player === 'O') {
-    let bestScore = -10000
-    for (let i = 0; i < moves.length; i++) {
-      if (moves[i].score > bestScore) {
-        bestScore = moves[i].score
-        bestMove = i
-      }
-    }
-  } else {
-    let bestScore = 10000
-    for (let i = 0; i < moves.length; i++) {
-      if (moves[i].score < bestScore) {
-        bestScore = moves[i].score
-        bestMove = i
-      }
-    }
-  }
-  return moves[bestMove]
 }
