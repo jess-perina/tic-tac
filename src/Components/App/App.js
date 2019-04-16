@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
-import logo from '../../logo.svg';
 import './App.css';
 import MasterGame from '../MasterGame/MasterGame';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isGameAI: true
-    }
-  }
-
   render() {
     return (
       <div className="App container">
