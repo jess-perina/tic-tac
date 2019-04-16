@@ -18,7 +18,7 @@ export default class WhoStartsButton extends Component {
     return (
       <div className="mode-btn">
         <span className="card-title">Who Starts</span>
-        <a className="dropdown-trigger btn" href="#" data-target="start-toggle">{this.props.starts}</a>
+        <a className="dropdown-trigger btn" href="#!" data-target="start-toggle">{this.props.starts}</a>
         <ul id="start-toggle" className="dropdown-content">
           <li onClick={this.props.setHumanStart}>
             <a href="#!">You</a>

@@ -18,7 +18,7 @@ export default class GameModeButton extends Component {
     return (
       <div>
         <span className="card-title">Change Game Mode</span>
-        <a className="dropdown-trigger btn" href="#" data-target="practice-toggle">{this.props.practiceMode}</a>
+        <a className="dropdown-trigger btn" href="#!" data-target="practice-toggle">{this.props.practiceMode}</a>
         <ul id="practice-toggle" className="dropdown-content">
           <li onClick={this.props.setPractice}>
             <a href="#!">Practice</a>
