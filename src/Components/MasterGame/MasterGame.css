@@ -1,12 +1,15 @@
+html, body {
+  height:100%;
+}
+
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+  width: 100%;
 }
 
 .board-row:after {
   clear: both;
   content: "";
-  display: table;
 }
 
 .status {
@@ -20,12 +23,12 @@ body {
   font-size: 34px;
   font-weight: bold;
   line-height: 34px;
-  height: 54px;
+  height: 58px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 54px;
+  width: 58px;
 }
 
 .square:focus {
@@ -58,4 +61,8 @@ body {
 
 .reset-btn {
   margin-top: 5px;
+}
+
+.container {
+  height: 100vh;
 }
