@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './Board.css';
 import Square from '../Square/Square';
 
 export default class Board extends Component {
