@@ -3,7 +3,7 @@ import M from 'materialize-css';
 import ticTac from '../../lib/ticTac'
 import './MasterGame.css';
 import Board from '../Board/Board';
-import AlertModal from './AlertModal'
+import AlertModal from '../Modals/AlertModal'
 import PlayerModeButton from '../PlayerModeButton/PlayerModeButton'
 import WhoStartsButton from '../WhoStartsButton/WhoStartsButton'
 import GameModeButton from '../GameModeButton/GameModeButton'
