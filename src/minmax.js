@@ -33,17 +33,6 @@ function setContainsNull(a, b, c) {
   return a === null || b === null || c === null
 }
 
-function displayWinner(winner) {
-  switch (winner) {
-    case 'X':
-      return 'You win';
-    case 'O':
-      return 'Computer wins'
-    default:
-      return 'Tie';
-  }
-}
-
 function possibleMoves(board) {
   let options = []
   for (var i = 0; i < board.length; i++) {
