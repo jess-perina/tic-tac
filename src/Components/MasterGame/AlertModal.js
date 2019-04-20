@@ -3,7 +3,7 @@ import React from 'react'
 function AlertModal(props) {
   return (
     <div>
-      <a className="modal-trigger" href="#!" />
+      <a className="modal-trigger" href="#!" >{}</a>
       <div id="modal1" className="modal">
         <div className="modal-content">
           <h5>reset current game to change options</h5>
