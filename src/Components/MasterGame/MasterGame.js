@@ -42,7 +42,6 @@ export default class Game extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('making moves in shouldComponentUpdate', 'current state: ', this.state, 'next state: ', nextState)
     const computerPiece = this.state.computerIsX ? 'X' : 'O'
     const squares = nextState.history[nextState.history.length - 1].squares.slice()
     const AIMove = ticTac.minMax(squares, computerPiece).index
