@@ -2,12 +2,9 @@ const ticTac = {
   minMax(board, player) {
     const availableMoves = possibleMoves(board)
     const winner = this.calculateWinner(board)
-    if (winner === 'X') {
-      return {score: -10}
-    } else if (winner === 'O') {
-      return {score: 10}
-    } else if (availableMoves.length === 0) {
-      return {score: 0}
+    const score = setScore(winner, availableMoves)
+    if (scoreExists(score)) {
+      return score
     }
 
     let moves = []
@@ -29,27 +26,15 @@ const ticTac = {
 
     let bestMove
     if (player === 'O') {
-      let bestScore = -10000
-      for (let i = 0; i < moves.length; i++) {
-        if (moves[i].score > bestScore) {
-          bestScore = moves[i].score
-          bestMove = i
-        }
-      }
+      bestMove = findBestMoveForO(moves)
     } else {
-      let bestScore = 10000
-      for (let i = 0; i < moves.length; i++) {
-        if (moves[i].score < bestScore) {
-          bestScore = moves[i].score
-          bestMove = i
-        }
-      }
+      bestMove = findBestMoveForX(moves)
     }
     return moves[bestMove]
   },
 
   calculateWinner(squares) {
-    const lines = [
+    const winningSets = [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -60,11 +45,11 @@ const ticTac = {
       [2, 4, 6]
     ];
     let tie = 'Tie';
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+    for (let set of winningSets) {
+      const [a, b, c] = set;
+      if (squareIsOccupied(squares[a]) && setIsEqual(squares[a], squares[b], squares[c])) {
         return squares[a]
-      } else if (squares[a] === null || squares[b] === null || squares[c] === null){
+      } else if (setContainsNull(squares[a], squares[b], squares[c])){
         tie = '';
       }
     }
@@ -72,15 +57,16 @@ const ticTac = {
   }
 }
 
-function displayWinner(winner) {
-  switch (winner) {
-    case 'X':
-      return 'You win';
-    case 'O':
-      return 'Computer wins'
-    default:
-      return 'Tie';
-  }
+function squareIsOccupied(square) {
+  return square === 'X' || square === 'O' || false
+}
+
+function setIsEqual(a, b, c) {
+  return a === b && a === c
+}
+
+function setContainsNull(a, b, c) {
+  return a === null || b === null || c === null
 }
 
 function possibleMoves(board) {
@@ -103,7 +89,37 @@ function setScore(winner, moves) {
     return {score: 10}
   } else if (moves.length === 0) {
     return {score: 0}
+  } else {
+    return {}
   }
+}
+
+function scoreExists(score) {
+  return score.hasOwnProperty('score')
+}
+
+function findBestMoveForO(moves) {
+  let bestMove
+  let bestScore = -10000
+  for (let i = 0; i < moves.length; i++) {
+    if (moves[i].score > bestScore) {
+      bestScore = moves[i].score
+      bestMove = i
+    }
+  }
+  return bestMove
+}
+
+function findBestMoveForX(moves) {
+  let bestMove
+  let bestScore = 10000
+  for (let i = 0; i < moves.length; i++) {
+    if (moves[i].score < bestScore) {
+      bestScore = moves[i].score
+      bestMove = i
+    }
+  }
+  return bestMove
 }
 
 export default ticTac
