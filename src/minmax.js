@@ -64,8 +64,12 @@ function setScore(winner, moves) {
     return {score: 10}
   } else if (moves.length === 0) {
     return {score: 0}
+  } else {
+    return {}
   }
 }
+
+
 
 function minMax(board, player) {
   const availableMoves = possibleMoves(board)
