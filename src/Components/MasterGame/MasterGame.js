@@ -252,7 +252,7 @@ export default class Game extends Component {
           : null
         }
 
-        <AlertModal />
+        <AlertModal reset={() => this.resetGame()} />
 
       </div>
     );
