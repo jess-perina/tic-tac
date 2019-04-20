@@ -182,7 +182,7 @@ export default class Game extends Component {
         'Go to game start';
 
       return (
-        <li key={move} className="collection-item teal accent-4">
+        <li key={step.lastMove} className="collection-item teal accent-4">
           <button type="button" className="btn-small waves-effect waves-light" onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
