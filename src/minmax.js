@@ -69,17 +69,40 @@ function setScore(winner, moves) {
   }
 }
 
+function scoreExists(score) {
+  return score.hasOwnProperty('score')
+}
 
+function findBestMoveForO(moves) {
+  let bestMove
+  let bestScore = -10000
+  for (let i = 0; i < moves.length; i++) {
+    if (moves[i].score > bestScore) {
+      bestScore = moves[i].score
+      bestMove = i
+    }
+  }
+  return bestMove
+}
+
+function findBestMoveForX(moves) {
+  let bestMove
+  let bestScore = 10000
+  for (let i = 0; i < moves.length; i++) {
+    if (moves[i].score < bestScore) {
+      bestScore = moves[i].score
+      bestMove = i
+    }
+  }
+  return bestMove
+}
 
 function minMax(board, player) {
   const availableMoves = possibleMoves(board)
   const winner = calculateWinner(board)
-  if (winner === 'X') {
-    return {score: -10}
-  } else if (winner === 'O') {
-    return {score: 10}
-  } else if (availableMoves.length === 0) {
-    return {score: 0}
+  const score = setScore(winner, availableMoves)
+  if (scoreExists(score)) {
+    return score
   }
 
   let moves = []
@@ -101,21 +124,9 @@ function minMax(board, player) {
 
   let bestMove
   if (player === 'O') {
-    let bestScore = -10000
-    for (let i = 0; i < moves.length; i++) {
-      if (moves[i].score > bestScore) {
-        bestScore = moves[i].score
-        bestMove = i
-      }
-    }
+    bestMove = findBestMoveForO(moves)
   } else {
-    let bestScore = 10000
-    for (let i = 0; i < moves.length; i++) {
-      if (moves[i].score < bestScore) {
-        bestScore = moves[i].score
-        bestMove = i
-      }
-    }
+    bestMove = findBestMoveForX(moves)
   }
   return moves[bestMove]
 }
