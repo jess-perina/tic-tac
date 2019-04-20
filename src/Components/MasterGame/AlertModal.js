@@ -10,7 +10,7 @@ function AlertModal(props) {
         </div>
         <div className="modal-footer">
           <a href="#!" className="modal-close waves-effect waves-green btn-flat">CANCEL</a>
-          <a href="#!" className="modal-close waves-effect waves-green btn-flat" onClick={props.reset} >RESET</a >
+          <a href="#!" className="modal-close waves-effect waves-green btn-flat" onClick={props.reset} >RESET</a>
         </div>
       </div>
     </div>
