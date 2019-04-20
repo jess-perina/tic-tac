@@ -1,5 +1,5 @@
 function calculateWinner(squares) {
-  const lines = [
+  const winningSets = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -10,15 +10,27 @@ function calculateWinner(squares) {
     [2, 4, 6]
   ];
   let tie = 'Tie';
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+  for (let set of winningSets) {
+    const [a, b, c] = set;
+    if (squareIsOccupied(squares[a]) && setIsEqual(squares[a], squares[b], squares[c])) {
       return squares[a]
-    } else if (squares[a] === null || squares[b] === null || squares[c] === null){
+    } else if (setContainsNull(squares[a], squares[b], squares[c])){
       tie = '';
     }
   }
   return tie || null;
+}
+
+function squareIsOccupied(square) {
+  return square === 'X' || square === 'O' || false
+}
+
+function setIsEqual(a, b, c) {
+  return a === b && a === c
+}
+
+function setContainsNull(a, b, c) {
+  return a === null || b === null || c === null
 }
 
 function displayWinner(winner) {
