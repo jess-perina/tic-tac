@@ -3,21 +3,40 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "materialize-css": "^1.0.0-rc.2",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2"
-  },
-  "devDependencies": {
-    "babel-eslint": "^8.2.6",
-    "eslint": "^5.16.0",
-    "eslint-config-fullstack": "^6.0.0",
-    "eslint-plugin-react": "^7.11.1",
-    "react-scripts": "1.1.4"
+    "materialize-css": "^1.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --no-watchman --all",
     "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "eslint": "^5.16.0",
+    "eslint-config-fullstack": "^6.0.0",
+    "eslint-plugin-react": "^7.13.0",
+    "rewire": "^4.0.1",
+    "typescript": "^3.4.5"
   }
 }
