@@ -1,8 +1,8 @@
 import React from 'react'
 
-function MovesList(props) {
+const MovesList = ({ moves }) => {
   return (
-    <ul className="collection">{props.moves}</ul>
+    <ul className="collection">{moves}</ul>
   )
 }
 
