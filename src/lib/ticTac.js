@@ -1,10 +1,77 @@
+let internal = {
+  squareIsOccupied(square) {
+    return square === 'X' || square === 'O' || false
+  },
+
+  setIsEqual(a, b, c) {
+    return a === b && a === c
+  },
+
+  setContainsNull(a, b, c) {
+    return a === null || b === null || c === null
+  },
+
+  possibleMoves(board) {
+    let options = []
+    for (var i = 0; i < board.length; i++) {
+      if (board[i] === null) {
+        options.push(i)
+      }
+    }
+    return options
+    // return board.filter((s, index ) => {
+    //   if (s === null) return index
+    // })
+  },
+
+  setScore(winner, moves, depth) {
+    if (winner === 'X') {
+      return {score: -10 + depth}
+    } else if (winner === 'O') {
+      return {score: 10 - depth}
+    } else if (moves.length === 0) {
+      return {score: 0}
+    } else {
+      return {}
+    }
+  },
+
+  scoreExists(score) {
+    return score.hasOwnProperty('score')
+  },
+
+  findBestMoveForO(moves) {
+    let bestMove
+    let bestScore = -Infinity
+    for (let i = 0; i < moves.length; i++) {
+      if (moves[i].score > bestScore) {
+        bestScore = moves[i].score
+        bestMove = i
+      }
+    }
+    return bestMove
+  },
+
+  findBestMoveForX(moves) {
+    let bestMove
+    let bestScore = Infinity
+    for (let i = 0; i < moves.length; i++) {
+      if (moves[i].score < bestScore) {
+        bestScore = moves[i].score
+        bestMove = i
+      }
+    }
+    return bestMove
+  }
+}
+
 const ticTac = {
   minMax(board, player, depth) {
     depth++
-    const availableMoves = possibleMoves(board)
+    const availableMoves = internal.possibleMoves(board)
     const winner = this.calculateWinner(board)
-    const score = setScore(winner, availableMoves, depth)
-    if (scoreExists(score)) {
+    const score = internal.setScore(winner, availableMoves, depth)
+    if (internal.scoreExists(score)) {
       return score
     }
 
@@ -27,9 +94,9 @@ const ticTac = {
 
     let bestMove
     if (player === 'O') {
-      bestMove = findBestMoveForO(moves)
+      bestMove = internal.findBestMoveForO(moves)
     } else {
-      bestMove = findBestMoveForX(moves)
+      bestMove = internal.findBestMoveForX(moves)
     }
     return moves[bestMove]
   },
@@ -48,9 +115,9 @@ const ticTac = {
     let tie = 'Tie';
     for (let set of winningSets) {
       const [a, b, c] = set;
-      if (squareIsOccupied(squares[a]) && setIsEqual(squares[a], squares[b], squares[c])) {
+      if (internal.squareIsOccupied(squares[a]) && internal.setIsEqual(squares[a], squares[b], squares[c])) {
         return squares[a]
-      } else if (setContainsNull(squares[a], squares[b], squares[c])){
+      } else if (internal.setContainsNull(squares[a], squares[b], squares[c])){
         tie = '';
       }
     }
@@ -58,69 +125,4 @@ const ticTac = {
   }
 }
 
-function squareIsOccupied(square) {
-  return square === 'X' || square === 'O' || false
-}
-
-function setIsEqual(a, b, c) {
-  return a === b && a === c
-}
-
-function setContainsNull(a, b, c) {
-  return a === null || b === null || c === null
-}
-
-function possibleMoves(board) {
-  let options = []
-  for (var i = 0; i < board.length; i++) {
-    if (board[i] === null) {
-      options.push(i)
-    }
-  }
-  return options
-  // return board.filter((s, index ) => {
-  //   if (s === null) return index
-  // })
-}
-
-function setScore(winner, moves, depth) {
-  if (winner === 'X') {
-    return {score: -10 + depth}
-  } else if (winner === 'O') {
-    return {score: 10 - depth}
-  } else if (moves.length === 0) {
-    return {score: 0}
-  } else {
-    return {}
-  }
-}
-
-function scoreExists(score) {
-  return score.hasOwnProperty('score')
-}
-
-function findBestMoveForO(moves) {
-  let bestMove
-  let bestScore = -Infinity
-  for (let i = 0; i < moves.length; i++) {
-    if (moves[i].score > bestScore) {
-      bestScore = moves[i].score
-      bestMove = i
-    }
-  }
-  return bestMove
-}
-
-function findBestMoveForX(moves) {
-  let bestMove
-  let bestScore = Infinity
-  for (let i = 0; i < moves.length; i++) {
-    if (moves[i].score < bestScore) {
-      bestScore = moves[i].score
-      bestMove = i
-    }
-  }
-  return bestMove
-}
-
-export default ticTac
+export { ticTac, internal }
