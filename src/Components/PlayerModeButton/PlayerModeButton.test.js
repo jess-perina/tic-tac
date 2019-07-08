@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import PlayerModeButton from './PlayerModeButton'
 
 describe('PlayerModeButton Component', () => {
-  it('renders as espected', () => {
+  it('renders as expected', () => {
     expect(shallow(<PlayerModeButton />)).toMatchSnapshot()
   })
 })

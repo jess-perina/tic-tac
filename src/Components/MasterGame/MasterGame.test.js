@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import MasterGame from './MasterGame'
 
 describe('MasterGame Component', () => {
-  it('renders as espected', () => {
+  it('renders as expected', () => {
     expect(shallow(<MasterGame />)).toMatchSnapshot()
   })
 })

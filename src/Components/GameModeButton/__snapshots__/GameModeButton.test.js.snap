@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GameModeButton Component renders as espected 1`] = `ShallowWrapper {}`;
+exports[`GameModeButton Component renders as expected 1`] = `ShallowWrapper {}`;
