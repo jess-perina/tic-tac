@@ -1,8 +1,9 @@
 const ticTac = {
-  minMax(board, player) {
+  minMax(board, player, depth) {
+    depth++
     const availableMoves = possibleMoves(board)
     const winner = this.calculateWinner(board)
-    const score = setScore(winner, availableMoves)
+    const score = setScore(winner, availableMoves, depth)
     if (scoreExists(score)) {
       return score
     }
@@ -14,10 +15,10 @@ const ticTac = {
       board[availableMoves[i]] = player
 
       if (player === 'O') {
-        let g = this.minMax(board, 'X')
+        let g = this.minMax(board, 'X', depth)
         move.score = g.score
       } else {
-        let g = this.minMax(board, 'O')
+        let g = this.minMax(board, 'O', depth)
         move.score = g.score
       }
       board[availableMoves[i]] = null
@@ -82,11 +83,11 @@ function possibleMoves(board) {
   // })
 }
 
-function setScore(winner, moves) {
+function setScore(winner, moves, depth) {
   if (winner === 'X') {
-    return {score: -10}
+    return {score: -10 - depth}
   } else if (winner === 'O') {
-    return {score: 10}
+    return {score: depth - 10}
   } else if (moves.length === 0) {
     return {score: 0}
   } else {

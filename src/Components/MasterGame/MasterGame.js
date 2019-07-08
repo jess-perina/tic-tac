@@ -44,7 +44,7 @@ export default class Game extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const computerPiece = this.state.computerIsX ? 'X' : 'O'
     const squares = nextState.history[nextState.history.length - 1].squares.slice()
-    const AIMove = ticTac.minMax(squares, computerPiece).index
+    const AIMove = ticTac.minMax(squares, computerPiece, 0).index
 
     this.makeAIMoves(nextState, AIMove)
     return true
