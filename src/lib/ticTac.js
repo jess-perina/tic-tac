@@ -85,9 +85,9 @@ function possibleMoves(board) {
 
 function setScore(winner, moves, depth) {
   if (winner === 'X') {
-    return {score: -10 - depth}
+    return {score: -10 + depth}
   } else if (winner === 'O') {
-    return {score: depth - 10}
+    return {score: 10 - depth}
   } else if (moves.length === 0) {
     return {score: 0}
   } else {
