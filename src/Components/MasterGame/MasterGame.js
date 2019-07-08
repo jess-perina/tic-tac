@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import M from 'materialize-css';
-import ticTac from '../../lib/ticTac'
+import { ticTac } from '../../lib/ticTac'
 import './MasterGame.css';
 import Board from '../Board/Board';
 import AlertModal from '../Modals/AlertModal'
