@@ -101,7 +101,7 @@ function scoreExists(score) {
 
 function findBestMoveForO(moves) {
   let bestMove
-  let bestScore = -10000
+  let bestScore = -Infinity
   for (let i = 0; i < moves.length; i++) {
     if (moves[i].score > bestScore) {
       bestScore = moves[i].score
@@ -113,7 +113,7 @@ function findBestMoveForO(moves) {
 
 function findBestMoveForX(moves) {
   let bestMove
-  let bestScore = 10000
+  let bestScore = Infinity
   for (let i = 0; i < moves.length; i++) {
     if (moves[i].score < bestScore) {
       bestScore = moves[i].score
