@@ -122,4 +122,4 @@ function findBestMoveForX(moves) {
   return bestMove
 }
 
-module.exports = ticTac
+export default ticTac
