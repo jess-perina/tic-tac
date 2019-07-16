@@ -30,7 +30,6 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^5.16.0",
